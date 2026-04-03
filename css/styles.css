@@ -188,3 +188,89 @@ footer {
   border-top: 1px solid var(--border);
   padding-top: 30px;
 }
+
+/* Mobile & Tablet Responsive */
+
+@media (max-width: 900px) {
+  .container {
+    padding: 40px 16px 60px;
+  }
+
+  header {
+    margin-bottom: 36px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chart-card {
+    padding: 20px 16px 16px;
+    border-radius: 14px;
+  }
+
+  .tooltip {
+    min-width: 160px;
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  footer {
+    font-size: 12px;
+    margin-top: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 24px 12px 40px;
+  }
+
+  header {
+    margin-bottom: 24px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  h1 {
+    letter-spacing: -0.5px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .dashboard-grid {
+    gap: 12px;
+  }
+
+  .chart-card {
+    padding: 14px 12px 12px;
+    border-radius: 12px;
+  }
+
+  .tooltip {
+    min-width: 140px;
+    padding: 8px 12px;
+  }
+
+  footer {
+    font-size: 11px;
+    padding-top: 20px;
+  }
+}
+
+/* Ensure SVGs scale properly and don't overflow on mobile */
+.chart-card svg {
+  max-width: 100%;
+  height: auto;
+}

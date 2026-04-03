@@ -16,7 +16,7 @@ function renderSankey(data) {
   svg.append("text")
     .attr("x", W / 2).attr("y", 40)
     .attr("text-anchor", "middle")
-    .style("fill", "#475569").style("font-size", "12px").style("font-family", "Inter,sans-serif")
+    .style("fill", "#64748b").style("font-size", "12.5px").style("font-family", "Inter,sans-serif")
     .text("Sankey flow from destination to power source. Band width ∝ mission count. Robotic probes only; crewed missions excluded.");
 
   const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
@@ -100,7 +100,7 @@ function renderSankey(data) {
     .attr("y", d => (d.y1 - d.y0) / 2)
     .attr("dy", "0.35em")
     .attr("text-anchor", d => d.x0 < W / 2 ? "start" : "end")
-    .style("fill", "#e2e8f0").style("font-size", "14px").style("font-weight", 500)
+    .style("fill", "#cbd5e1").style("font-size", "14.5px").style("font-weight", 500)
     .text(d => `${d.name} (${d.value})`);
 
   appendChartSource(svg, W, H, SRC_PLANET);

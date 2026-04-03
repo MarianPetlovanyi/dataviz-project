@@ -1,4 +1,3 @@
-// Shared source attribution helper (called by each chart at the bottom of its SVG)
 function appendChartSource(svg, W, H, parts) {
   const cw = 5.5;
   const totalW = parts.reduce((s, p) => s + p.text.length * cw, 0);

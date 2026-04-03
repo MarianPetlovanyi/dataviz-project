@@ -50,8 +50,8 @@ function renderLaunchesChart(svgSelector, data, years) {
   svg.append("text")
     .attr("x", W / 2).attr("y", 42)
     .attr("text-anchor", "middle")
-    .style("fill", "#475569")
-    .style("font-size", "12px")
+    .style("fill", "#64748b")
+    .style("font-size", "12.5px")
     .style("font-family", "Inter,sans-serif")
     .text("Top 10 organizations stacked by launches per year. Excludes Russia & Soviet entities.");
 
@@ -71,8 +71,8 @@ function renderLaunchesChart(svgSelector, data, years) {
         .attr("fill", color(k)).attr("rx", 2);
       svg.append("text")
         .attr("x", lx + 14).attr("y", ly + 9)
-        .style("fill", "#94a3b8")
-        .style("font-size", "10px")
+        .style("fill", "#b0bec5")
+        .style("font-size", "12px")
         .style("font-family", "Inter,sans-serif")
         .text(k);
     });
@@ -109,7 +109,7 @@ function renderLaunchesChart(svgSelector, data, years) {
     .call(d3.axisBottom(x).ticks(12).tickFormat(d3.format("d")))
     .call(ax => {
       ax.select(".domain").attr("stroke", "rgba(255,255,255,0.1)");
-      ax.selectAll(".tick text").style("fill", "#64748b").style("font-size", "11px").style("font-family", "Inter,sans-serif");
+      ax.selectAll(".tick text").style("fill", "#94a3b8").style("font-size", "13px").style("font-family", "Inter,sans-serif");
       ax.selectAll(".tick line").attr("stroke", "rgba(255,255,255,0.07)");
     });
 
@@ -118,7 +118,7 @@ function renderLaunchesChart(svgSelector, data, years) {
     .call(d3.axisLeft(y).ticks(6))
     .call(ax => {
       ax.select(".domain").attr("stroke", "rgba(255,255,255,0.08)");
-      ax.selectAll(".tick text").style("fill", "#64748b").style("font-size", "11px").style("font-family", "Inter,sans-serif");
+      ax.selectAll(".tick text").style("fill", "#94a3b8").style("font-size", "13px").style("font-family", "Inter,sans-serif");
       ax.selectAll(".tick line").attr("stroke", "rgba(255,255,255,0.06)");
     });
 
@@ -126,7 +126,7 @@ function renderLaunchesChart(svgSelector, data, years) {
     .attr("transform", "rotate(-90)")
     .attr("x", -iH / 2).attr("y", -40)
     .attr("text-anchor", "middle")
-    .style("fill", "#475569").style("font-size", "11px").style("font-family", "Inter,sans-serif")
+    .style("fill", "#64748b").style("font-size", "12px").style("font-family", "Inter,sans-serif")
     .text("Launches per year");
 
   appendChartSource(svg, W, H, SRC_SPACE);

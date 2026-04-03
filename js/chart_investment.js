@@ -21,7 +21,7 @@ function renderTotalCostByDestination(data) {
   svg.append("text")
     .attr("x", W / 2).attr("y", 40)
     .attr("text-anchor", "middle")
-    .style("fill", "#475569").style("font-size", "12px").style("font-family", "Inter,sans-serif")
+    .style("fill", "#64748b").style("font-size", "12.5px").style("font-family", "Inter,sans-serif")
     .text("Cumulative TMCN budget in millions of 2020 USD. Robotic probes only; crewed missions excluded.");
 
   const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
@@ -42,14 +42,14 @@ function renderTotalCostByDestination(data) {
     .call(ax => {
       ax.select(".domain").attr("stroke", "rgba(255,255,255,0.1)");
       ax.selectAll(".tick line").remove();
-      ax.selectAll(".tick text").style("fill", "#64748b").style("font-size", "12px").attr("dy", "10px");
+      ax.selectAll(".tick text").style("fill", "#94a3b8").style("font-size", "13px").attr("dy", "10px");
     });
 
   g.append("g")
     .call(d3.axisLeft(y).tickSize(0))
     .call(ax => {
       ax.select(".domain").remove();
-      ax.selectAll(".tick text").style("fill", "#cbd5e1").style("font-weight", "500").style("font-size", "13px").attr("dx", "-8px");
+      ax.selectAll(".tick text").style("fill", "#b0bec5").style("font-weight", "500").style("font-size", "13.5px").attr("dx", "-8px");
     });
 
   const tip = d3.select("#tooltip5");
@@ -87,7 +87,7 @@ function renderTotalCostByDestination(data) {
     .attr("y", d => y(d.dest) + y.bandwidth() / 2)
     .attr("x", d => x(d.total) + 10)
     .attr("dy", "0.35em")
-    .style("fill", "#94a3b8").style("font-size", "12px").style("font-weight", "500")
+    .style("fill", "#b0bec5").style("font-size", "13px").style("font-weight", "500")
     .text(d => `$${d.total.toLocaleString(undefined, { maximumFractionDigits: 0 })}M`);
 
   appendChartSource(svg, W, H, SRC_PLANET);

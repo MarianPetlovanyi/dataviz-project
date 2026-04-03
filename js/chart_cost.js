@@ -16,7 +16,7 @@ function renderCostChart(data) {
   svg.append("text")
     .attr("x", W / 2).attr("y", 40)
     .attr("text-anchor", "middle")
-    .style("fill", "#475569").style("font-size", "12px").style("font-family", "Inter,sans-serif")
+    .style("fill", "#64748b").style("font-size", "12.5px").style("font-family", "Inter,sans-serif")
     .text("Each dot is a single launch in constant 2020 USD (CPI-adjusted). White line: 5-Year Rolling Mean. Log scale.");
 
   const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
@@ -44,7 +44,7 @@ function renderCostChart(data) {
     .call(ax => {
       ax.select(".domain").attr("stroke", "rgba(255,255,255,0.1)");
       ax.selectAll(".tick line").remove();
-      ax.selectAll(".tick text").style("fill", "#64748b").style("font-size", "12px").attr("dy", "10px");
+      ax.selectAll(".tick text").style("fill", "#94a3b8").style("font-size", "13px").attr("dy", "10px");
     });
 
   // Y-Axis (log, explicit ticks to prevent overlap)
@@ -53,7 +53,7 @@ function renderCostChart(data) {
     .call(ax => {
       ax.select(".domain").attr("stroke", "rgba(255,255,255,0.1)");
       ax.selectAll(".tick line").remove();
-      ax.selectAll(".tick text").style("fill", "#cbd5e1").style("font-size", "12px");
+      ax.selectAll(".tick text").style("fill", "#cbd5e1").style("font-size", "13px");
     });
 
   g.append("text")
@@ -114,11 +114,11 @@ function renderCostChart(data) {
 
   // Legend (sidebar)
   const legend = svg.append("g").attr("transform", `translate(${iW + m.left + 18}, ${m.top})`);
-  legend.append("text").attr("y", -6).style("fill", "#cbd5e1").style("font-size", "11px").style("font-weight", 600).text("Top Organizations");
+  legend.append("text").attr("y", -6).style("fill", "#b0bec5").style("font-size", "12px").style("font-weight", 600).text("Top Organizations");
   topComps.forEach((c, i) => {
     const gE = legend.append("g").attr("transform", `translate(0, ${i * 22 + 10})`);
     gE.append("rect").attr("width", 10).attr("height", 10).attr("rx", 2).attr("fill", color(c));
-    gE.append("text").attr("x", 16).attr("y", 9).style("fill", "#94a3b8").style("font-size", "11px").text(c);
+    gE.append("text").attr("x", 16).attr("y", 9).style("fill", "#b0bec5").style("font-size", "12px").text(c);
   });
 
   appendChartSource(svg, W, H, SRC_SPACE);

@@ -44,8 +44,8 @@ function renderOutcomesChart(svgSelector, data, years) {
   svg.append("text")
     .attr("x", W / 2).attr("y", 42)
     .attr("text-anchor", "middle")
-    .style("fill", "#475569")
-    .style("font-size", "12px")
+    .style("fill", "#64748b")
+    .style("font-size", "12.5px")
     .style("font-family", "Inter,sans-serif")
     .text("Success / Partial Failure / Failure counts per year, with 5-year rolling success rate.");
 
@@ -107,14 +107,14 @@ function renderOutcomesChart(svgSelector, data, years) {
     .call(d3.axisLeft(yL).ticks(5))
     .call(ax => {
       ax.select(".domain").attr("stroke", "rgba(255,255,255,0.06)");
-      ax.selectAll(".tick text").style("fill", "#64748b").style("font-size", "11px").style("font-family", "Inter,sans-serif");
+      ax.selectAll(".tick text").style("fill", "#94a3b8").style("font-size", "13px").style("font-family", "Inter,sans-serif");
       ax.selectAll(".tick line").attr("stroke", "rgba(255,255,255,0.05)");
     });
   g.append("text")
     .attr("transform", "rotate(-90)")
     .attr("x", -iH / 2).attr("y", -44)
     .attr("text-anchor", "middle")
-    .style("fill", "#475569").style("font-size", "11px").style("font-family", "Inter,sans-serif")
+    .style("fill", "#64748b").style("font-size", "12px").style("font-family", "Inter,sans-serif")
     .text("Launches");
 
   // X axis
@@ -125,7 +125,7 @@ function renderOutcomesChart(svgSelector, data, years) {
       .tickFormat(d3.format("d")))
     .call(ax => {
       ax.select(".domain").attr("stroke", "rgba(255,255,255,0.08)");
-      ax.selectAll(".tick text").style("fill", "#64748b").style("font-size", "11px").style("font-family", "Inter,sans-serif");
+      ax.selectAll(".tick text").style("fill", "#94a3b8").style("font-size", "13px").style("font-family", "Inter,sans-serif");
       ax.selectAll(".tick line").remove();
     });
 
@@ -135,14 +135,14 @@ function renderOutcomesChart(svgSelector, data, years) {
     .call(d3.axisRight(yR).ticks(5).tickFormat(d => d3.format(".0%")(d)))
     .call(ax => {
       ax.select(".domain").attr("stroke", "rgba(255,255,255,0.06)");
-      ax.selectAll(".tick text").style("fill", "#6366f1").style("font-size", "11px").style("font-family", "Inter,sans-serif");
+      ax.selectAll(".tick text").style("fill", "#818cf8").style("font-size", "13px").style("font-family", "Inter,sans-serif");
       ax.selectAll(".tick line").remove();
     });
   g.append("text")
     .attr("transform", "rotate(90)")
     .attr("x", iH / 2).attr("y", -(iW + 72))
     .attr("text-anchor", "middle")
-    .style("fill", "#6366f1").style("font-size", "11px").style("font-family", "Inter,sans-serif")
+    .style("fill", "#818cf8").style("font-size", "12px").style("font-family", "Inter,sans-serif")
     .text("5-yr Rolling Success Rate");
 
   // Inline legend
@@ -153,15 +153,15 @@ function renderOutcomesChart(svgSelector, data, years) {
       .attr("fill", col).attr("fill-opacity", 0.85).attr("rx", 2);
     legG.append("text")
       .attr("x", i * 86 + 17).attr("y", 10)
-      .style("fill", "#94a3b8").style("font-size", "11px").style("font-family", "Inter,sans-serif")
+      .style("fill", "#b0bec5").style("font-size", "12px").style("font-family", "Inter,sans-serif")
       .text(lbl);
   });
   legG.append("line")
     .attr("x1", 262).attr("x2", 282).attr("y1", 6).attr("y2", 6)
-    .attr("stroke", "#6366f1").attr("stroke-width", 2.5).attr("stroke-linecap", "round");
+    .attr("stroke", "#818cf8").attr("stroke-width", 2.5).attr("stroke-linecap", "round");
   legG.append("text")
     .attr("x", 286).attr("y", 10)
-    .style("fill", "#6366f1").style("font-size", "11px").style("font-family", "Inter,sans-serif")
+    .style("fill", "#818cf8").style("font-size", "12px").style("font-family", "Inter,sans-serif")
     .text("5-yr rolling success rate");
 
   appendChartSource(svg, W, H, SRC_SPACE);

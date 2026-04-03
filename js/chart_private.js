@@ -16,7 +16,7 @@ function renderPrivateAreaChart(data) {
   svg.append("text")
     .attr("x", W / 2).attr("y", 40)
     .attr("text-anchor", "middle")
-    .style("fill", "#475569").style("font-size", "12px").style("font-family", "Inter,sans-serif")
+    .style("fill", "#64748b").style("font-size", "12.5px").style("font-family", "Inter,sans-serif")
     .text("State agencies, government-related contractors, and private/commercial operators. Excludes Russia & Soviet entities.");
 
   const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
@@ -83,7 +83,7 @@ function renderPrivateAreaChart(data) {
     .call(ax => {
       ax.select(".domain").attr("stroke", "rgba(255,255,255,0.1)");
       ax.selectAll(".tick line").remove();
-      ax.selectAll(".tick text").style("fill", "#64748b").style("font-size", "12px").attr("dy", "10px");
+      ax.selectAll(".tick text").style("fill", "#94a3b8").style("font-size", "13px").attr("dy", "10px");
     });
 
   // Y-Axis
@@ -92,7 +92,7 @@ function renderPrivateAreaChart(data) {
     .call(ax => {
       ax.select(".domain").attr("stroke", "rgba(255,255,255,0.1)");
       ax.selectAll(".tick line").remove();
-      ax.selectAll(".tick text").style("fill", "#64748b").style("font-size", "12px");
+      ax.selectAll(".tick text").style("fill", "#94a3b8").style("font-size", "13px");
     });
 
   g.append("text")
@@ -107,7 +107,7 @@ function renderPrivateAreaChart(data) {
   [...groups].reverse().forEach((gName, i) => {
     const row = legend.append("g").attr("transform", `translate(0, ${i * 26 + 4})`);
     row.append("rect").attr("width", 14).attr("height", 14).attr("rx", 3).attr("fill", color(gName));
-    row.append("text").attr("x", 22).attr("y", 11).style("fill", "#cbd5e1").style("font-size", "12px").text(gName);
+    row.append("text").attr("x", 22).attr("y", 11).style("fill", "#b0bec5").style("font-size", "12.5px").text(gName);
   });
 
   appendChartSource(svg, W, H, SRC_SPACE);

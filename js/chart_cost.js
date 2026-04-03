@@ -32,7 +32,7 @@ function renderCostChart(data) {
   const color = d3.scaleOrdinal().domain(topComps).range(palette).unknown("#475569");
 
   // Grid
-  g.append("g").selectAll("line").data([1, 10, 50, 100, 500, 1000, 5000]).join("line")
+  g.append("g").selectAll("line").data([10, 50, 100, 500, 1000, 5000]).join("line")
     .attr("x1", 0).attr("x2", iW)
     .attr("y1", d => y(d)).attr("y2", d => y(d))
     .attr("stroke", "rgba(255,255,255,0.04)").attr("stroke-dasharray", "4,4");
@@ -49,7 +49,7 @@ function renderCostChart(data) {
 
   // Y-Axis (log, explicit ticks to prevent overlap)
   g.append("g")
-    .call(d3.axisLeft(y).tickValues([1, 10, 50, 100, 500, 1000, 5000]).tickFormat(d => "$" + d + "M"))
+    .call(d3.axisLeft(y).tickValues([10, 50, 100, 500, 1000, 5000]).tickFormat(d => "$" + d + "M"))
     .call(ax => {
       ax.select(".domain").attr("stroke", "rgba(255,255,255,0.1)");
       ax.selectAll(".tick line").remove();

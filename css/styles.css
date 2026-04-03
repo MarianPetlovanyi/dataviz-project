@@ -212,6 +212,14 @@ footer {
   .chart-card {
     padding: 20px 16px 16px;
     border-radius: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Make SVGs wide enough to stay readable; card scrolls to reveal */
+  .chart-card svg {
+    min-width: 680px;
+    height: auto;
   }
 
   .tooltip {
@@ -269,8 +277,8 @@ footer {
   }
 }
 
-/* Ensure SVGs scale properly and don't overflow on mobile */
+/* Base: SVGs are fluid on large screens */
 .chart-card svg {
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }

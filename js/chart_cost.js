@@ -84,8 +84,7 @@ function renderCostChart(data) {
       `);
     })
     .on("mousemove", function (e) {
-      const r = document.getElementById("chart-costs").closest(".chart-card").getBoundingClientRect();
-      tip.style("left", (e.clientX - r.left + 15) + "px").style("top", (e.clientY - r.top - 60) + "px");
+      tip.style("left", (e.pageX + 15) + "px").style("top", (e.pageY - 60) + "px");
     })
     .on("mouseleave", function () {
       d3.select(this).attr("r", 4).attr("fill-opacity", 0.3);

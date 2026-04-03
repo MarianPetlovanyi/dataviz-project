@@ -96,12 +96,79 @@ function renderLaunchesChart(svgSelector, data, years) {
     .y1(d => y(d[1]))
     .curve(d3.curveCatmullRom.alpha(0.5));
 
-  g.selectAll(".area-path")
+  // Areas — interactive
+  const areaPaths = g.selectAll(".area-path")
     .data(series).join("path")
     .attr("class", "area-path")
     .attr("d", area)
     .attr("fill", d => color(d.key))
-    .attr("fill-opacity", 0.78);
+    .attr("fill-opacity", 0.78)
+    .style("cursor", "crosshair")
+    .style("transition", "fill-opacity 0.2s");
+
+  // Crosshair
+  const crosshair = g.append("line")
+    .attr("y1", 0).attr("y2", iH)
+    .attr("stroke", "rgba(255,255,255,0.18)")
+    .attr("stroke-width", 1)
+    .attr("stroke-dasharray", "4,3")
+    .attr("pointer-events", "none")
+    .style("opacity", 0);
+
+  // Tooltip
+  const tip = d3.select("#tooltip-launches");
+
+  // Area hover — highlight hovered, dim others
+  areaPaths
+    .on("mouseenter", function(e, d) {
+      areaPaths.style("fill-opacity", p => p.key === d.key ? 1 : 0.25);
+    })
+    .on("mouseleave", function() {
+      areaPaths.style("fill-opacity", 0.78);
+      crosshair.style("opacity", 0);
+      tip.style("opacity", 0);
+    });
+
+  // Invisible overlay to capture mouse for crosshair + tooltip
+  g.append("rect")
+    .attr("width", iW).attr("height", iH)
+    .attr("fill", "none")
+    .attr("pointer-events", "all")
+    .style("cursor", "crosshair")
+    .on("mousemove", function(e) {
+      const [mx] = d3.pointer(e);
+      const yr = Math.round(x.invert(mx));
+      if (yr < years[0] || yr > years[years.length - 1]) return;
+      const xPos = x(yr);
+      crosshair.attr("x1", xPos).attr("x2", xPos).style("opacity", 1);
+
+      const yrData = stackData.find(d => d.year === yr);
+      if (!yrData) return;
+      const total = groups.reduce((s, gr) => s + yrData[gr], 0);
+      const rows = groups
+        .filter(gr => yrData[gr] > 0)
+        .sort((a, b) => yrData[b] - yrData[a])
+        .map(gr => `<div class="tooltip-row">
+          <span style="display:flex;align-items:center;gap:6px">
+            <span style="width:8px;height:8px;border-radius:2px;background:${color(gr)};flex-shrink:0"></span>
+            ${gr}
+          </span>
+          <span class="tooltip-val">${yrData[gr]}</span>
+        </div>`).join("");
+
+      tip.style("opacity", 1)
+        .style("left", (e.pageX + 16) + "px")
+        .style("top",  (e.pageY - 50) + "px")
+        .html(`<div class="tooltip-title">${yr}</div><hr>${rows}<hr>
+               <div class="tooltip-row"><span>Total</span><span class="tooltip-val">${total}</span></div>`);
+    })
+    .on("mouseleave", function() {
+      crosshair.style("opacity", 0);
+      tip.style("opacity", 0);
+      areaPaths.style("fill-opacity", 0.78);
+    });
+
+
 
   // X axis
   g.append("g")

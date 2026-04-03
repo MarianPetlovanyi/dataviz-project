@@ -64,10 +64,9 @@ function renderPrivateAreaChart(data) {
       if (!dataPt) return;
       const val = dataPt[1] - dataPt[0];
       const grp = d.key;
-      const r = document.getElementById("chart-private").closest(".chart-card").getBoundingClientRect();
       tip.style("opacity", 1)
-        .style("left", (e.clientX - r.left + 15) + "px")
-        .style("top", (e.clientY - r.top - 40) + "px")
+        .style("left", (e.pageX + 15) + "px")
+        .style("top", (e.pageY - 40) + "px")
         .html(`
           <div class="tooltip-title">${yearHovered}</div>
           <div class="tooltip-row"><span>Segment</span><span class="tooltip-val" style="color:${color(grp)}">${grp}</span></div>

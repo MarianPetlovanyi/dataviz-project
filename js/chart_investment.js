@@ -65,16 +65,18 @@ function renderTotalCostByDestination(data) {
     .style("cursor", "crosshair")
     .on("mouseenter", function (e, d) {
       d3.select(this).attr("fill", "#c084fc");
-      const r = document.getElementById("chart-total-cost").closest(".chart-card").getBoundingClientRect();
       tip.style("opacity", 1)
-        .style("left", (e.clientX - r.left + 15) + "px")
-        .style("top", (e.clientY - r.top - 40) + "px")
+        .style("left", (e.pageX + 15) + "px")
+        .style("top", (e.pageY - 40) + "px")
         .html(`
           <div class="tooltip-title">${d.dest}</div>
           <div class="tooltip-row"><span>Total Cumulative Investment</span>
             <span class="tooltip-val" style="color:#c084fc">$${d.total.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M</span>
           </div>
         `);
+    })
+    .on("mousemove", e => {
+       tip.style("left", (e.pageX + 15) + "px").style("top", (e.pageY - 40) + "px");
     })
     .on("mouseleave", function () {
       d3.select(this).attr("fill", "#a855f7");

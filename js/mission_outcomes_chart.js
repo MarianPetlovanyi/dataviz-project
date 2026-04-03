@@ -84,7 +84,7 @@ function renderOutcomesChart(svgSelector, data, years) {
     });
   });
 
-  // Rolling success rate — gradient fill + line
+
   g.append("path").datum(rolling)
     .attr("d", d3.area()
       .defined(d => d.rate !== null)
@@ -163,6 +163,41 @@ function renderOutcomesChart(svgSelector, data, years) {
     .attr("x", 286).attr("y", 10)
     .style("fill", "#818cf8").style("font-size", "12px").style("font-family", "Inter,sans-serif")
     .text("5-yr rolling success rate");
+
+  // Interactive overlays — drawn last so they sit on top
+  const tip = d3.select("#tooltip-outcomes");
+  g.selectAll(".yr-overlay")
+    .data(yearlyOutcomes).join("rect")
+    .attr("class", "yr-overlay")
+    .attr("x", d => x(d.year))
+    .attr("y", 0)
+    .attr("width", x.bandwidth())
+    .attr("height", iH)
+    .attr("fill", "transparent")
+    .style("cursor", "crosshair")
+    .on("mouseenter", function(e, d) {
+      d3.select(this).attr("fill", "rgba(255,255,255,0.05)");
+      const rate = rolling.find(r => r.year === d.year)?.rate;
+      tip.style("opacity", 1)
+        .style("left", (e.pageX + 16) + "px")
+        .style("top",  (e.pageY - 80) + "px")
+        .html(`
+          <div class="tooltip-title">${d.year}</div>
+          <div class="tooltip-row"><span style="color:#22c55e">Success</span><span class="tooltip-val">${d.succ}</span></div>
+          <div class="tooltip-row"><span style="color:#f59e0b">Partial</span><span class="tooltip-val">${d.part}</span></div>
+          <div class="tooltip-row"><span style="color:#ef4444">Failure</span><span class="tooltip-val">${d.fail}</span></div>
+          <div class="tooltip-row"><span>Total</span><span class="tooltip-val">${d.total}</span></div>
+          ${rate != null ? `<div class="tooltip-row"><span style="color:#818cf8">Rate</span><span class="tooltip-val" style="color:#818cf8">${d3.format(".0%")(rate)}</span></div>` : ""}
+        `);
+    })
+    .on("mousemove", function(e) {
+      tip.style("left", (e.pageX + 16) + "px")
+         .style("top",  (e.pageY - 80) + "px");
+    })
+    .on("mouseleave", function() {
+      d3.select(this).attr("fill", "transparent");
+      tip.style("opacity", 0);
+    });
 
   appendChartSource(svg, W, H, SRC_SPACE);
 }

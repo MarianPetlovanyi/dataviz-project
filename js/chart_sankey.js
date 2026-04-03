@@ -76,8 +76,7 @@ function renderSankey(data) {
       `);
     })
     .on("mousemove", function (e) {
-      const r = document.getElementById("chart-sankey").closest(".chart-card").getBoundingClientRect();
-      tip.style("left", (e.clientX - r.left + 15) + "px").style("top", (e.clientY - r.top - 50) + "px");
+      tip.style("left", (e.pageX + 15) + "px").style("top", (e.pageY - 50) + "px");
     })
     .on("mouseleave", function () {
       d3.select(this).attr("stroke-opacity", 0.3);

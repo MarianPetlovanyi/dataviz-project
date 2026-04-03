@@ -34,25 +34,21 @@
 
     <!-- Chart 3: Rise of Private Spaceflight -->
     <div class="chart-card full-width">
-      <div id="tooltip1" class="tooltip"></div>
       <svg id="chart-private" viewBox="0 0 1200 470"></svg>
     </div>
 
     <!-- Chart 4: Launch Cost Over Time -->
     <div class="chart-card full-width">
-      <div id="tooltip-cost" class="tooltip"></div>
       <svg id="chart-costs" viewBox="0 0 1200 510"></svg>
     </div>
 
     <!-- Chart 5: Power Sources (Sankey) -->
     <div class="chart-card full-width">
-      <div id="tooltip3" class="tooltip"></div>
       <svg id="chart-sankey" viewBox="0 0 1200 450"></svg>
     </div>
 
     <!-- Chart 6: Investment by Destination -->
     <div class="chart-card full-width">
-      <div id="tooltip5" class="tooltip"></div>
       <svg id="chart-total-cost" viewBox="0 0 1200 480"></svg>
     </div>
 
@@ -61,6 +57,14 @@
   <footer>
   </footer>
 </div>
+
+<!-- tooltips container -->
+<div id="tooltip-launches" class="tooltip"></div>
+<div id="tooltip-outcomes" class="tooltip"></div>
+<div id="tooltip1" class="tooltip"></div>
+<div id="tooltip-cost" class="tooltip"></div>
+<div id="tooltip3" class="tooltip"></div>
+<div id="tooltip5" class="tooltip"></div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>

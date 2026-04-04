@@ -17,12 +17,12 @@ function renderTotalCostByDestination(data) {
     .attr("x", W / 2).attr("y", 22)
     .attr("text-anchor", "middle")
     .style("fill", "#cbd5e1").style("font-size", "17px").style("font-weight", "600").style("font-family", "Inter,sans-serif")
-    .text("Total Financial Investment by Destination Body");
+    .text("Загальні фінансові інвестиції за об'єктом призначення");
   svg.append("text")
     .attr("x", W / 2).attr("y", 40)
     .attr("text-anchor", "middle")
     .style("fill", "#64748b").style("font-size", "12.5px").style("font-family", "Inter,sans-serif")
-    .text("Cumulative TMCN budget in millions of 2020 USD. Robotic probes only; crewed missions excluded.");
+    .text("Сукупний бюджет у мільйонах доларів США (2020). Лише роботизовані зонди; пілотовані місії виключено.");
 
   const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
 
@@ -70,7 +70,7 @@ function renderTotalCostByDestination(data) {
         .style("top", (e.pageY - 40) + "px")
         .html(`
           <div class="tooltip-title">${d.dest}</div>
-          <div class="tooltip-row"><span>Total Cumulative Investment</span>
+          <div class="tooltip-row"><span>Загальні сукупні інвестиції</span>
             <span class="tooltip-val" style="color:#c084fc">$${d.total.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M</span>
           </div>
         `);

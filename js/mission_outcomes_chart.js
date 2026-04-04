@@ -39,7 +39,7 @@ function renderOutcomesChart(svgSelector, data, years) {
     .style("fill", "#cbd5e1")
     .style("font-size", "17px").style("font-weight", "600")
     .style("font-family", "Inter,sans-serif")
-    .text("Annual Mission Outcomes");
+    .text("Щорічні результати місій");
 
   svg.append("text")
     .attr("x", W / 2).attr("y", 42)
@@ -47,7 +47,7 @@ function renderOutcomesChart(svgSelector, data, years) {
     .style("fill", "#64748b")
     .style("font-size", "12.5px")
     .style("font-family", "Inter,sans-serif")
-    .text("Success / Partial Failure / Failure counts per year, with 5-year rolling success rate.");
+    .text("Кількість успішних / частково неуспішних / невдалих місій на рік, з 5-річним ковзним рівнем успіху.");
 
   // Defs (gradient)
   const defs = svg.append("defs");
@@ -115,7 +115,7 @@ function renderOutcomesChart(svgSelector, data, years) {
     .attr("x", -iH / 2).attr("y", -44)
     .attr("text-anchor", "middle")
     .style("fill", "#64748b").style("font-size", "12px").style("font-family", "Inter,sans-serif")
-    .text("Launches");
+    .text("Запуски");
 
   // X axis
   g.append("g")
@@ -143,26 +143,33 @@ function renderOutcomesChart(svgSelector, data, years) {
     .attr("x", iH / 2).attr("y", -(iW + 72))
     .attr("text-anchor", "middle")
     .style("fill", "#818cf8").style("font-size", "12px").style("font-family", "Inter,sans-serif")
-    .text("5-yr Rolling Success Rate");
+    .text("5-річний ковзний рівень успіху");
 
   // Inline legend
   const legG = g.append("g").attr("transform", "translate(16,8)");
-  [["#22c55e", "Success"], ["#f59e0b", "Partial"], ["#ef4444", "Failure"]].forEach(([col, lbl], i) => {
+  const legItems = [
+    { col: "#22c55e", lbl: "Успіх", xOffset: 0 },
+    { col: "#f59e0b", lbl: "Частковий неуспіх", xOffset: 70 },
+    { col: "#ef4444", lbl: "Невдача", xOffset: 220 }
+  ];
+  
+  legItems.forEach(({ col, lbl, xOffset }) => {
     legG.append("rect")
-      .attr("x", i * 86).attr("y", 0).attr("width", 12).attr("height", 12)
+      .attr("x", xOffset).attr("y", 0).attr("width", 12).attr("height", 12)
       .attr("fill", col).attr("fill-opacity", 0.85).attr("rx", 2);
     legG.append("text")
-      .attr("x", i * 86 + 17).attr("y", 10)
+      .attr("x", xOffset + 17).attr("y", 10)
       .style("fill", "#b0bec5").style("font-size", "12px").style("font-family", "Inter,sans-serif")
       .text(lbl);
   });
+  
   legG.append("line")
-    .attr("x1", 262).attr("x2", 282).attr("y1", 6).attr("y2", 6)
+    .attr("x1", 300).attr("x2", 320).attr("y1", 6).attr("y2", 6)
     .attr("stroke", "#818cf8").attr("stroke-width", 2.5).attr("stroke-linecap", "round");
   legG.append("text")
-    .attr("x", 286).attr("y", 10)
+    .attr("x", 325).attr("y", 10)
     .style("fill", "#818cf8").style("font-size", "12px").style("font-family", "Inter,sans-serif")
-    .text("5-yr rolling success rate");
+    .text("5-річний ковзний рівень успіху");
 
   // Interactive overlays — drawn last so they sit on top
   const tip = d3.select("#tooltip-outcomes");
@@ -183,11 +190,11 @@ function renderOutcomesChart(svgSelector, data, years) {
         .style("top",  (e.pageY - 80) + "px")
         .html(`
           <div class="tooltip-title">${d.year}</div>
-          <div class="tooltip-row"><span style="color:#22c55e">Success</span><span class="tooltip-val">${d.succ}</span></div>
-          <div class="tooltip-row"><span style="color:#f59e0b">Partial</span><span class="tooltip-val">${d.part}</span></div>
-          <div class="tooltip-row"><span style="color:#ef4444">Failure</span><span class="tooltip-val">${d.fail}</span></div>
-          <div class="tooltip-row"><span>Total</span><span class="tooltip-val">${d.total}</span></div>
-          ${rate != null ? `<div class="tooltip-row"><span style="color:#818cf8">Rate</span><span class="tooltip-val" style="color:#818cf8">${d3.format(".0%")(rate)}</span></div>` : ""}
+          <div class="tooltip-row"><span style="color:#22c55e">Успіх</span><span class="tooltip-val">${d.succ}</span></div>
+          <div class="tooltip-row"><span style="color:#f59e0b">Частковий неуспіх</span><span class="tooltip-val">${d.part}</span></div>
+          <div class="tooltip-row"><span style="color:#ef4444">Невдача</span><span class="tooltip-val">${d.fail}</span></div>
+          <div class="tooltip-row"><span>Всього</span><span class="tooltip-val">${d.total}</span></div>
+          ${rate != null ? `<div class="tooltip-row"><span style="color:#818cf8">Рівень</span><span class="tooltip-val" style="color:#818cf8">${d3.format(".0%")(rate)}</span></div>` : ""}
         `);
     })
     .on("mousemove", function(e) {

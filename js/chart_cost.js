@@ -12,12 +12,12 @@ function renderCostChart(data) {
     .attr("x", W / 2).attr("y", 22)
     .attr("text-anchor", "middle")
     .style("fill", "#cbd5e1").style("font-size", "17px").style("font-weight", "600").style("font-family", "Inter,sans-serif")
-    .text("Orbital Launch Cost Over Time (Inflation-Adjusted)");
+    .text("Вартість орбітальних запусків з часом (з урахуванням інфляції)");
   svg.append("text")
     .attr("x", W / 2).attr("y", 40)
     .attr("text-anchor", "middle")
     .style("fill", "#64748b").style("font-size", "12.5px").style("font-family", "Inter,sans-serif")
-    .text("Each dot is a single launch in constant 2020 USD (CPI-adjusted). White line: 5-Year Rolling Mean. Log scale.");
+    .text("Кожна крапка — окремий запуск у постійних доларах США 2020 року. Біла лінія: 5-річне ковзне середнє. Логарифмічна шкала.");
 
   const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
 
@@ -59,7 +59,7 @@ function renderCostChart(data) {
   g.append("text")
     .attr("transform", "rotate(-90)").attr("x", -iH / 2).attr("y", -55)
     .attr("text-anchor", "middle").style("fill", "#94a3b8").style("font-size", "12px")
-    .text("Cost in 2020 USD (Inflation-Adjusted)");
+    .text("Вартість у доларах США 2020 р.");
 
   // Tooltip
   const tip = d3.select("#tooltip-cost");
@@ -76,11 +76,11 @@ function renderCostChart(data) {
       d3.select(this).attr("r", 8).attr("fill-opacity", 0.9);
       tip.style("opacity", 1).html(`
         <div class="tooltip-title">${d.detail}</div>
-        <div class="tooltip-row"><span>Company</span><span class="tooltip-val" style="color:${color(d.company)}">${d.company}</span></div>
-        <div class="tooltip-row"><span>Year</span><span class="tooltip-val">${d.year}</span></div>
-        <div class="tooltip-row"><span>Nominal Cost</span><span class="tooltip-val">$${d.cost.toFixed(1)}M</span></div>
-        <div class="tooltip-row"><span>Real Cost (2020 $)</span><span class="tooltip-val" style="color:#22c55e">$${d.costAdjusted.toFixed(1)}M</span></div>
-        <div class="tooltip-row"><span>Status</span><span class="tooltip-val">${d.status}</span></div>
+        <div class="tooltip-row"><span>Компанія</span><span class="tooltip-val" style="color:${color(d.company)}">${d.company}</span></div>
+        <div class="tooltip-row"><span>Рік</span><span class="tooltip-val">${d.year}</span></div>
+        <div class="tooltip-row"><span>Номінальна вартість</span><span class="tooltip-val">$${d.cost.toFixed(1)}M</span></div>
+        <div class="tooltip-row"><span>Реальна вартість (ціни 2020 р.)</span><span class="tooltip-val" style="color:#22c55e">$${d.costAdjusted.toFixed(1)}M</span></div>
+        <div class="tooltip-row"><span>Статус</span><span class="tooltip-val">${d.status}</span></div>
       `);
     })
     .on("mousemove", function (e) {
@@ -105,20 +105,18 @@ function renderCostChart(data) {
   g.append("path").datum(yearlyMeans).attr("fill", "none")
     .attr("stroke", "#f8fafc").attr("stroke-width", 2.5).attr("d", meanLine);
 
-  g.append("text")
-    .attr("x", x(yearlyMeans.at(-1).year))
-    .attr("y", y(yearlyMeans.at(-1).mean) - 12)
-    .attr("text-anchor", "end").style("fill", "#f8fafc").style("font-size", "12px").style("font-weight", "600")
-    .text("5-Yr Rolling Mean");
-
   // Legend (sidebar)
   const legend = svg.append("g").attr("transform", `translate(${iW + m.left + 18}, ${m.top})`);
-  legend.append("text").attr("y", -6).style("fill", "#b0bec5").style("font-size", "12px").style("font-weight", 600).text("Top Organizations");
+  legend.append("text").attr("y", -6).style("fill", "#b0bec5").style("font-size", "12px").style("font-weight", 600).text("Провідні організації");
   topComps.forEach((c, i) => {
     const gE = legend.append("g").attr("transform", `translate(0, ${i * 22 + 10})`);
     gE.append("rect").attr("width", 10).attr("height", 10).attr("rx", 2).attr("fill", color(c));
     gE.append("text").attr("x", 16).attr("y", 9).style("fill", "#b0bec5").style("font-size", "12px").text(c);
   });
+
+  const meanLeg = legend.append("g").attr("transform", `translate(0, ${topComps.length * 22 + 24})`);
+  meanLeg.append("line").attr("x1", 0).attr("x2", 12).attr("y1", 5).attr("y2", 5).attr("stroke", "#f8fafc").attr("stroke-width", 2.5);
+  meanLeg.append("text").attr("x", 16).attr("y", 9).style("fill", "#f8fafc").style("font-size", "12px").style("font-weight", 600).text("5-річне ковзне середнє");
 
   appendChartSource(svg, W, H, SRC_SPACE);
 }

@@ -17,13 +17,13 @@ function appendChartSource(svg, W, H, parts) {
 }
 
 const SRC_SPACE = [
-  { text: "Source: ", href: null },
-  { text: "All Space Missions 1957", href: "https://www.kaggle.com/datasets/agirlcoding/all-space-missions-from-1957" },
+  { text: "Джерело: ", href: null },
+  { text: "The Space Devs API", href: "https://thespacedevs.com/llapi" },
 ];
 
 const SRC_PLANET = [
-  { text: "Source: ", href: null },
-  { text: "NASA Interplanetary Mission Database (NIM)", href: "https://datadryad.org/dataset/doi:10.5061/dryad.fj6q5745z" },
+  { text: "Джерело: ", href: null },
+  { text: "База даних міжпланетних місій NASA (NIM)", href: "https://datadryad.org/dataset/doi:10.5061/dryad.fj6q5745z" },
 ];
 
 const STATE_ORGS = new Set([
@@ -41,9 +41,9 @@ const GOV_RELATED_ORGS = new Set([
 ]);
 
 const getOrgType = company => {
-  if (STATE_ORGS.has(company)) return "State / government";
-  if (GOV_RELATED_ORGS.has(company)) return "Government-related";
-  return "Private / commercial";
+  if (STATE_ORGS.has(company)) return "Державні";
+  if (GOV_RELATED_ORGS.has(company)) return "Урядові підрядники";
+  return "Приватні / комерційні";
 };
 
 
@@ -92,8 +92,17 @@ Promise.all([
       const raw = parseFloat((d[" Rocket"] || "").replace(/,/g, ""));
       const cost = isNaN(raw) ? null : raw;
       const costAdjusted = (cost && year) ? cost * (CPI_2020 / getCPI(year)) : null;
+      const COMPANY_ALIASES = {
+        "China Aerospace Science and Technology Corporation": "CASC",
+        "United Launch Alliance": "ULA",
+        "National Aeronautics and Space Administration": "NASA",
+        "Russian Space Forces": "VKS RF",
+      };
+      let rawComp = (d["Company Name"] || "").trim();
+      let comp = COMPANY_ALIASES[rawComp] || rawComp;
+
       return {
-        company: (d["Company Name"] || "").trim(),
+        company: comp,
         year,
         cost,
         costAdjusted,
@@ -110,7 +119,22 @@ Promise.all([
   renderPrivateAreaChart(spaceData);
   renderCostChart(spaceData.filter(d => d.cost !== null && d.cost > 0));
 
-  const DEST_MAP = { "L1": "L1 Lagrange Point", "Asteroid": "Near-Earth Asteroid", "Asteroid Belt": "Main Belt Asteroid" };
+  const DEST_MAP = {
+    "L1": "Точка Лагранжа L1",
+    "Asteroid": "Навколоземний астероїд",
+    "Asteroid Belt": "Астероїд головного поясу",
+    "Mars": "Марс",
+    "Moon": "Місяць",
+    "Venus": "Венера",
+    "Jupiter": "Юпітер",
+    "Saturn": "Сатурн",
+    "Mercury": "Меркурій",
+    "Sun": "Сонце",
+    "Comet": "Комета",
+    "Lunar": "Місяць",
+    "Pluto": "Плутон",
+
+  };
 
   const planetData = rawPlanet
     .filter(d => d.Mission && d.Mission.trim().length > 0)
@@ -121,7 +145,7 @@ Promise.all([
       return {
         mission: d.Mission,
         destination: dest,
-        powerSource: sa === "RTG" ? "Nuclear (RTG)" : sa ? "Solar Array" : "Unknown",
+        powerSource: sa === "RTG" ? "Ядерні (РІТЕГ)" : sa ? "Сонячні батареї" : "Невідомо",
         tmcn: parseFloat(d.TMCN) || null
       };
     });

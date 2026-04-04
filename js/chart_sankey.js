@@ -12,12 +12,12 @@ function renderSankey(data) {
     .attr("x", W / 2).attr("y", 22)
     .attr("text-anchor", "middle")
     .style("fill", "#cbd5e1").style("font-size", "17px").style("font-weight", "600").style("font-family", "Inter,sans-serif")
-    .text("Power Sources by Destination");
+    .text("Джерела енергії за місцем призначення");
   svg.append("text")
     .attr("x", W / 2).attr("y", 40)
     .attr("text-anchor", "middle")
     .style("fill", "#64748b").style("font-size", "12.5px").style("font-family", "Inter,sans-serif")
-    .text("Sankey flow from destination to power source. Band width ∝ mission count. Robotic probes only; crewed missions excluded.");
+    .text("Діаграма Санкі від місця призначення до джерела енергії. Ширина смуги пропорційна кількості місій. Лише роботизовані зонди; пілотовані місії виключено.");
 
   const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
 
@@ -53,8 +53,8 @@ function renderSankey(data) {
   });
 
   const getColor = name => {
-    if (name === "Nuclear (RTG)") return "#ef4444";
-    if (name === "Solar Array") return "#eab308";
+    if (name === "Ядерні (РІТЕГ)") return "#ef4444";
+    if (name === "Сонячні батареї") return "#eab308";
     return "#3b82f6";
   };
 
@@ -72,7 +72,7 @@ function renderSankey(data) {
       d3.select(this).attr("stroke-opacity", 0.65);
       tip.style("opacity", 1).html(`
         <div class="tooltip-title">${d.source.name} → ${d.target.name}</div>
-        <div class="tooltip-row"><span>Missions</span><span class="tooltip-val">${d.value}</span></div>
+        <div class="tooltip-row"><span>Місії</span><span class="tooltip-val">${d.value}</span></div>
       `);
     })
     .on("mousemove", function (e) {

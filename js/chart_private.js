@@ -12,17 +12,19 @@ function renderPrivateAreaChart(data) {
     .attr("x", W / 2).attr("y", 22)
     .attr("text-anchor", "middle")
     .style("fill", "#cbd5e1").style("font-size", "17px").style("font-weight", "600").style("font-family", "Inter,sans-serif")
-    .text("The Rise of Private Spaceflight");
+    .text("Розвиток приватних космічних польотів");
   svg.append("text")
     .attr("x", W / 2).attr("y", 40)
     .attr("text-anchor", "middle")
     .style("fill", "#64748b").style("font-size", "12.5px").style("font-family", "Inter,sans-serif")
-    .text("State agencies, government-related contractors, and private/commercial operators. Excludes Russia & Soviet entities.");
+    .text("Державні установи, урядові підрядники та приватні/комерційні оператори. За винятком Росії та радянських організацій.");
 
   const g = svg.append("g").attr("transform", `translate(${m.left},${m.top})`);
 
-  const years = d3.range(1957, 2021);
-  const groups = ["State / government", "Government-related", "Private / commercial"];
+  const minYear = d3.min(data, d => d.year) || 1957;
+  const maxYear = d3.max(data, d => d.year) || new Date().getFullYear();
+  const years = d3.range(minYear, maxYear + 1);
+  const groups = ["Державні", "Урядові підрядники", "Приватні / комерційні"];
 
   const yearGrouped = d3.rollup(data, v => v.length, d => d.year, d => getOrgType(d.company));
   const stackData = years.map(yr => {
@@ -32,7 +34,7 @@ function renderPrivateAreaChart(data) {
   });
   const series = d3.stack().keys(groups)(stackData);
 
-  const x = d3.scaleLinear().domain([1957, 2020]).range([0, iW]);
+  const x = d3.scaleLinear().domain([minYear, maxYear]).range([0, iW]);
   const y = d3.scaleLinear().domain([0, d3.max(series.at(-1), d => d[1]) * 1.1]).range([iH, 0]);
   const color = d3.scaleOrdinal().domain(groups).range(["#3b82f6", "#a855f7", "#f43f5e"]);
 
@@ -69,8 +71,8 @@ function renderPrivateAreaChart(data) {
         .style("top", (e.pageY - 40) + "px")
         .html(`
           <div class="tooltip-title">${yearHovered}</div>
-          <div class="tooltip-row"><span>Segment</span><span class="tooltip-val" style="color:${color(grp)}">${grp}</span></div>
-          <div class="tooltip-row"><span>Launches</span><span class="tooltip-val">${val}</span></div>
+          <div class="tooltip-row"><span>Сегмент</span><span class="tooltip-val" style="color:${color(grp)}">${grp}</span></div>
+          <div class="tooltip-row"><span>Запуски</span><span class="tooltip-val">${val}</span></div>
         `);
     })
     .on("mouseleave", () => tip.style("opacity", 0));
@@ -97,7 +99,7 @@ function renderPrivateAreaChart(data) {
   g.append("text")
     .attr("transform", "rotate(-90)").attr("x", -iH / 2).attr("y", -55)
     .attr("text-anchor", "middle").style("fill", "#94a3b8").style("font-size", "12px")
-    .text("Launches per year");
+    .text("Запуски на рік");
 
   // Legend (top-left box)
   const legend = svg.append("g").attr("transform", `translate(${m.left + 20}, ${m.top + 16})`);

@@ -10,7 +10,7 @@ function renderLaunchesChart(svgSelector, data, years) {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10)
     .map(d => d[0]);
-  const OTHER = "Other";
+  const OTHER = "Інші";
 
   data.forEach(d => { d.grp = top10.includes(d.company) ? d.company : OTHER; });
   const groups = [...top10, OTHER];
@@ -45,7 +45,7 @@ function renderLaunchesChart(svgSelector, data, years) {
     .style("fill", "#cbd5e1")
     .style("font-size", "17px").style("font-weight", "600")
     .style("font-family", "Inter,sans-serif")
-    .text("Annual Launches by Organization");
+    .text("Щорічні запуски за організаціями");
 
   svg.append("text")
     .attr("x", W / 2).attr("y", 42)
@@ -53,7 +53,7 @@ function renderLaunchesChart(svgSelector, data, years) {
     .style("fill", "#64748b")
     .style("font-size", "12.5px")
     .style("font-family", "Inter,sans-serif")
-    .text("Top 10 organizations stacked by launches per year. Excludes Russia & Soviet entities.");
+    .text("Топ-10 організацій за запусками на рік. За винятком Росії та радянських організацій.");
 
   // Legend — 2 rows of 6 + 5
   const itemW = 132;
@@ -160,7 +160,7 @@ function renderLaunchesChart(svgSelector, data, years) {
         .style("left", (e.pageX + 16) + "px")
         .style("top",  (e.pageY - 50) + "px")
         .html(`<div class="tooltip-title">${yr}</div><hr>${rows}<hr>
-               <div class="tooltip-row"><span>Total</span><span class="tooltip-val">${total}</span></div>`);
+               <div class="tooltip-row"><span>Всього</span><span class="tooltip-val">${total}</span></div>`);
     })
     .on("mouseleave", function() {
       crosshair.style("opacity", 0);
@@ -194,7 +194,7 @@ function renderLaunchesChart(svgSelector, data, years) {
     .attr("x", -iH / 2).attr("y", -40)
     .attr("text-anchor", "middle")
     .style("fill", "#64748b").style("font-size", "12px").style("font-family", "Inter,sans-serif")
-    .text("Launches per year");
+    .text("Запуски на рік");
 
   appendChartSource(svg, W, H, SRC_SPACE);
 }

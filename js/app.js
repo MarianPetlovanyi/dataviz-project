@@ -1,24 +1,32 @@
 function appendChartSource(svg, W, H, parts) {
-  const cw = 5.5;
-  const totalW = parts.reduce((s, p) => s + p.text.length * cw, 0);
-  let curX = W / 2 - totalW / 2;
+  const textElem = svg.append("text")
+    .attr("x", W / 2).attr("y", H - 6)
+    .attr("text-anchor", "middle")
+    .style("font-size", "10px").style("font-family", "Inter,sans-serif");
+
   parts.forEach(p => {
     const parent = p.href
-      ? svg.append("a").attr("href", p.href).attr("target", "_blank")
-      : svg;
-    parent.append("text")
-      .attr("x", curX).attr("y", H - 6)
-      .style("font-size", "10px").style("font-family", "Inter,sans-serif")
+      ? textElem.append("a").attr("href", p.href).attr("target", "_blank")
+      : textElem;
+    
+    parent.append("tspan")
       .attr("fill", p.href ? "#6366f1" : "#64748b")
       .attr("text-decoration", p.href ? "underline" : null)
+      .attr("xml:space", "preserve")
       .text(p.text);
-    curX += p.text.length * cw;
   });
 }
 
 const SRC_SPACE = [
   { text: "Джерело: ", href: null },
+  { text: "Kaggle", href: "https://www.kaggle.com/datasets/agirlcoding/all-space-missions-from-1957/data" },
+  { text: " та ", href: null },
   { text: "The Space Devs API", href: "https://thespacedevs.com/llapi" },
+];
+
+const SRC_COST = [
+  { text: "Джерело: ", href: null },
+  { text: "Всі космічні місії з 1957 (Kaggle)", href: "https://www.kaggle.com/datasets/agirlcoding/all-space-missions-from-1957/data" },
 ];
 
 const SRC_PLANET = [

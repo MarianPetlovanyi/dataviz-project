@@ -118,5 +118,5 @@ function renderCostChart(data) {
   meanLeg.append("line").attr("x1", 0).attr("x2", 12).attr("y1", 5).attr("y2", 5).attr("stroke", "#f8fafc").attr("stroke-width", 2.5);
   meanLeg.append("text").attr("x", 16).attr("y", 9).style("fill", "#f8fafc").style("font-size", "12px").style("font-weight", 600).text("5-річне ковзне середнє");
 
-  appendChartSource(svg, W, H, SRC_SPACE);
+  appendChartSource(svg, W, H, SRC_COST);
 }
